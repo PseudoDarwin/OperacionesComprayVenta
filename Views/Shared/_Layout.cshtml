@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Repositorio digital</title>
+    <link rel="stylesheet" href="~/Content/Styles/StyleLayout.css" />
+
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary">
+        <div class="container">
+            <img src="~/Resources/logoU.jpg" width="60" height="60" />
+            @Html.ActionLink("Repositorio digital", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li>@Html.ActionLink("Repositorio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li id="liRepositorio">@Html.ActionLink("Gestionar", "ViewRepositorio", "Repositorio", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li id="liCarreras">@Html.ActionLink("Carreras", "ViewCarrera", "Carrera", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li id="liMaterias">@Html.ActionLink("Materias", "ViewMateria", "Materia", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li id="liUsuario">@Html.ActionLink("Usuarios", "ViewUsuario", "Usuario", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+                <form class="d-flex">
+                    <a class="nav-link" href="#" style="color:white;"> <i class="bi-person-circle"></i>@RepositorioDigital.Utilidades.VariablesPublicas.usuario</a>
+
+                    <a class="nav-link" href="@Url.Action("ViewLogin", "Login")" style="color:white;"> <i class="bi-box-arrow-left"></i> Cerrar Sesión</a>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <h1 class="nav-link" style="display:none" id="htipouser">@RepositorioDigital.Utilidades.VariablesPublicas.tipouser</h1>
+
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    <footer>
+        <img src="~/Resources/logofacultad.jpg" width="60" height="60" />
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script src="~/Scripts/Front/frontLayout.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+</body>
+</html>

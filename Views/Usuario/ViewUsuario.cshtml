@@ -1,0 +1,231 @@
+﻿@{
+    ViewBag.Title = "Gestionar Usuarios";
+}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+<link rel="stylesheet" href="~/Content/Styles/StyleRepositorio.css" />
+<script src="~/Scripts/CRUD/usuario.js"></script>
+<script src="~/Scripts/Front/frontUsuario.js"></script>
+
+<!-- Modal -->
+<div class="modal fade" id="ModalAgregarUsuario" tabindex="-1" data-bs-backdrop="static" aria-labelledby="ModalAgregarUsuario" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title" style="color:white" id="exampleModalLabel">Rellene los campos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div id="mensajeAgregarUsuario" class="alert alert-danger" style="margin-top:5px; display:none"></div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Nombre de Usuario:</label>
+                        <input type="text" class="form-control" id="txtnombreusuarioagregar">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Correo electronico:</label>
+                        <input type="email" class="form-control" id="txtcorreusuariooagregar">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Contraseña:</label>
+                        <input type="password" class="form-control" id="txtcontraagregar">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Repetir contraseña:</label>
+                        <input type="password" class="form-control" id="txtcontra2agregar">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="AgregaUsuario()">Agregar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="ModalEditarUsuario" tabindex="-1" data-bs-backdrop="static" aria-labelledby="ModalEditarUsuario" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success">
+                <h5 class="modal-title" style="color:white" id="exampleModalLabel">Rellene los campos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div id="mensajeEditarUsuario" class="alert alert-danger" style="margin-top:5px; display:none"></div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Id:</label>
+                        <input type="text" class="form-control" id="idusereditar" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Nombre de Usuario:</label>
+                        <input type="text" class="form-control" id="idnombreusereditar">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Correo electronico:</label>
+                        <input type="email" class="form-control" id="idcorreousereditar">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-success" onclick="EditarUsuario()">Editar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalEliminarUsuario" tabindex="-1" data-bs-backdrop="static" aria-labelledby="ModalEliminarUsuario" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="@Url.Action("EliminarUsuario","Usuario")" method="post">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title" style="color:white" id="exampleModalLabel">¿Quiere eliminar este registro?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Id:</label>
+                        <input type="text" class="form-control" name="iduser" id="txtuserideliminar" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Nombre de usuario:</label>
+                        <input type="text" class="form-control"  id="txtusernombreeliminar" readonly>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="modal fade" id="ModalCambiarContraUsuario" tabindex="-1" data-bs-backdrop="static" aria-labelledby="ModalCambiarContraUsuario" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title" style="color:white" id="exampleModalLabel">Llene los campos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div id="mensajecambiarcontra" class="alert alert-danger" style="margin-top:5px; display:none"></div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Id:</label>
+                        <input type="text" class="form-control" id="txtidcambiarcontra" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Introduzca nueva contraseña:</label>
+                        <input type="password" class="form-control" id="idcambiarcontra1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Repita la contraseña:</label>
+                        <input type="password" class="form-control" id="idcambiarcontra2">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-warning" onclick="EditarContra()">Cambiar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@if (TempData["MensajeAlerta"] != null)
+{
+    <div id="alerta" class="alert alert-success" style="margin-top:5px">
+        @TempData["MensajeAlerta"]
+    </div>
+}
+
+@if (TempData["MensajeError"] != null)
+{
+    <div id="alertaError" class="alert alert-danger" style="margin-top:5px">
+        @TempData["MensajeError"]
+    </div>
+}
+
+
+<div class="card" style="height:75vh">
+    <div class="card-header bg-primary">
+        <div class="container">
+            <div class="row d-flex justify-content-between align-items-center">
+                <div class="col-10">
+                    <h5 class="card-title" style="color:white">Gestionar Usuarios</h5>
+                </div>
+                <div class="col-2 d-flex justify-content-end">
+                    <button type="submit" class="btnAgregar btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalAgregarUsuario" style="color:white"><i class="bi bi-file-earmark-plus"></i> Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <div class="col-sm-12">
+            <table id="dgvUsuarios" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Nombre de Usuario</th>
+                        <th scope="col">Correo electronico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (RepositorioDigital.Models.ModelUsuario _model in Model)
+                    {
+                        <tr>
+                            <td>@_model.iduser</td>
+                            <td>@_model.nombreuser</td>
+                            <td>@_model.correouser</td>
+                            <td>
+                                <a class="btn btn-success btn-sm" onclick="mostrarEditarArchivo(@_model.iduser,'@_model.nombreuser','@_model.correouser')"><i class="far fa-edit"></i></a>
+                                <a class="btn btn-danger btn-sm" onclick="mostrarEliminarArchivo(@_model.iduser,'@_model.nombreuser')"><i class="fas fa-trash"></i></a>
+                               <a class="btn btn-warning btn-sm" onclick="mostrarEditarContra(@_model.iduser)"><i class="fas fa-key"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- /.card-body -->
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+
+<script>
+    $(document).ready(function () {
+        // Obtener el elemento del alert
+        var alerta = document.getElementById('alerta');
+
+        // Ocultar el alert después de 5 segundos (5000 milisegundos)
+        setTimeout(function () {
+            alerta.style.display = 'none';
+        }, 5000);
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Obtener el elemento del alert
+        var alerta = document.getElementById('alertaError');
+
+        // Ocultar el alert después de 5 segundos (5000 milisegundos)
+        setTimeout(function () {
+            alerta.style.display = 'none';
+        }, 5000);
+    });
+</script>
+

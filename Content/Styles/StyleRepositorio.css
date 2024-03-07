@@ -1,0 +1,44 @@
+﻿.btnAgregar{
+    border: solid 1px;
+    border-color: white;
+}
+
+.ui-autocomplete {
+    padding-left:-30px;
+    z-index: 9999; /* O cualquier número mayor que el z-index del modal */
+    position: absolute;
+ 
+}
+
+.ui-helper-hidden-accessible {
+    display: none;
+}
+
+.ui-menu {
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.ui-menu-item {
+
+    padding: 8px;
+    cursor: pointer;
+    list-style: none;
+    background-color: white;
+    margin-left: -35px
+}
+
+    .ui-menu-item:hover {
+        color: white;
+        background-color: #218EDE;
+        /* Otros estilos de resaltado al pasar el mouse */
+    }
+
+
+
+
+.card{
+    height:70vh;
+}

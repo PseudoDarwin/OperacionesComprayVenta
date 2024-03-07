@@ -1,0 +1,181 @@
+﻿
+@{
+    ViewBag.Title = "ViewCarrera";
+}
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+<link rel="stylesheet" href="~/Content/Styles/StyleRepositorio.css" />
+<script src="~/Scripts/CRUD/Carrera.js"></script>
+<script src="~/Scripts/Front/frontCarrera.js"></script>
+
+<!-- Modal -->
+<div class="modal fade" id="ModalAgregarCarrera" tabindex="-1" data-bs-backdrop="static" aria-labelledby="ModalAgregarCarrera" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title" style="color:white" id="exampleModalLabel">Rellene los campos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div id="mensajeAgregarCarrera" class="alert alert-danger" style="margin-top:5px; display:none"></div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Nombre de Carrera:</label>
+                        <input type="text" class="form-control" id="txtcarreraagregar">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="AgregarCarrera()">Agregar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalEditarCarrera" tabindex="-1" data-bs-backdrop="static" aria-labelledby="ModalEditarCarrera" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success">
+                <h5 class="modal-title" style="color:white" id="exampleModalLabel">Rellene los campos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div id="mensajeEditarCarrera" class="alert alert-danger" style="margin-top:5px; display:none"></div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Id:</label>
+                        <input type="text" class="form-control" id="txtideditarcarrera" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Nombre de Carrera:</label>
+                        <input type="text" class="form-control" id="txtcarreraeditar">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-success" onclick="EditarCarrera()">Editar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalEliminarCarrera" tabindex="-1" data-bs-backdrop="static" aria-labelledby="ModalEliminarCarrera" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="@Url.Action("EliminarCarrera","Carrera")" method="post">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title" style="color:white" id="exampleModalLabel">¿Quiere eliminar este registro?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Id:</label>
+                        <input type="text" class="form-control" name="idcarrera" id="txtidcarreraeliminar" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Nombre de Carrera:</label>
+                        <input type="text" class="form-control" id="txtcarreraeliminar" readonly>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@if (TempData["MensajeAlerta"] != null)
+{
+    <div id="alerta" class="alert alert-success" style="margin-top:5px">
+        @TempData["MensajeAlerta"]
+    </div>
+}
+
+@if (TempData["MensajeError"] != null)
+{
+    <div id="alertaError" class="alert alert-danger" style="margin-top:5px">
+        @TempData["MensajeError"]
+    </div>
+}
+
+
+<div class="card">
+    <div class="card-header bg-primary">
+        <div class="container">
+            <div class="row d-flex justify-content-between align-items-center">
+                <div class="col-10">
+                    <h5 class="card-title" style="color:white">Gestionar Carrera</h5>
+                </div>
+                <div class="col-2 d-flex justify-content-end">
+                    <button type="submit" class="btnAgregar btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalAgregarCarrera" style="color:white"><i class="bi bi-file-earmark-plus"></i> Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body" style="height:75vh">
+
+        <div class="col-sm-12">
+            <table id="dgvMaterias" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Carrera</th>
+                        <th scope="col">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (RepositorioDigital.Models.ModelCarrera _model in Model)
+                    {
+                        <tr>
+                            <td>@_model.idcarrera</td>
+                            <td>@_model.carrera</td>
+                            <td>
+                                <a class="btn btn-success btn-sm" onclick="mostrareditarCarrera(@_model.idcarrera,'@_model.carrera')"><i class="far fa-edit"></i></a>
+                                <a class="btn btn-danger btn-sm" onclick="mostrareliminarCarrera(@_model.idcarrera,'@_model.carrera')"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- /.card-body -->
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+
+<script>
+    $(document).ready(function () {
+        // Obtener el elemento del alert
+        var alerta = document.getElementById('alerta');
+
+        // Ocultar el alert después de 5 segundos (5000 milisegundos)
+        setTimeout(function () {
+            alerta.style.display = 'none';
+        }, 5000);
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Obtener el elemento del alert
+        var alerta = document.getElementById('alertaError');
+
+        // Ocultar el alert después de 5 segundos (5000 milisegundos)
+        setTimeout(function () {
+            alerta.style.display = 'none';
+        }, 5000);
+    });
+</script>
+

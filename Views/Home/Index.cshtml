@@ -1,0 +1,83 @@
+﻿@model IEnumerable<RepositorioDigital.Models.ModelRepositorio>
+@{
+    ViewBag.Title = "Repositorio";
+}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+<link rel="stylesheet" href="~/Content/Styles/StyleRepositorio.css" />
+<div class="card">
+    <div class="card-header bg-primary">
+        <div class="container">
+            <div class="row d-flex justify-content-between align-items-center">
+                <div class="col-10">
+                    <h5 class="card-title" style="color:white">Buscar repositorio</h5>
+                </div>
+                <div class="col-2 d-flex justify-content-end">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <input type="text" id="searchInputArchivo" style="margin-bottom:5px" placeholder="Buscar...">
+        <div class="col-sm-12" style="max-height: 70vh; overflow-y: auto;">
+            <table id="dgvArchivos" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Título</th>
+                        <th scope="col">Materia</th>
+                        <th scope="col">Carrera</th>
+                        <th scope="col">Autor</th>
+                        <th scope="col">Tipo de Archivo</th>
+                        <th scope="col">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (RepositorioDigital.Models.ModelRepositorio _model in Model)
+                    {
+                        <tr>
+                            <td>@_model.idarchivo</td>
+                            <td>@_model.titulo</td>
+                            <td>@_model.materia</td>
+                            <td>@_model.carrera</td>
+                            <td>@_model.autor</td>
+                            <td>@_model.tipo</td>
+                            <td>
+                                <a class="btn btn-secondary btn-sm" onclick="obtenertitulo('@_model.titulo')"><i class="fas fa-download"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- /.card-body -->
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#searchInputArchivo').on('keyup', function () {
+            var value = $(this).val().toLowerCase();
+            $('#dgvArchivos tbody tr').filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+    });
+</script>
+
+<script>
+
+
+    function obtenertitulo(titulo) {
+        descargarArchivo(titulo);
+    }
+
+
+
+    function descargarArchivo(nombreArchivo) {
+        window.location.href = "/Home/DescargarArchivo?nombreArchivo=" + nombreArchivo;
+    }
+</script>

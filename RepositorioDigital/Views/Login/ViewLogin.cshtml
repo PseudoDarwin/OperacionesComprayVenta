@@ -1,0 +1,26 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+    ViewBag.Title = "ViewLogin";
+}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+<link href="~/Content/Styles/StyleLogin.css" rel="stylesheet" />
+
+<form class="formulario" action="@Url.Action("ViewLogin","Login")" method="post">
+    <h1>Ingrese sus credenciales</h1>
+
+    <div class="contenedor">
+        <div class="input-contenedor">
+            <i class="fas fa-user"style="margin-left:20px"></i>
+            <input type="text" name="nombreuser" placeholder="Usuario">
+        </div>
+
+        <div class="input-contenedor">
+            <i class="fas fa-key" style="margin-left:20px"></i>
+            <input type="password" placeholder="Contraseña" name="contra">
+        </div>
+        <input type="submit" value="Login" class="button">
+        <h2>@ViewData["MensajeLogin"]</h2>
+        @*<button class="fcc-btn" type="submit">Ingresar</button>*@
+    </div>
+</form>
